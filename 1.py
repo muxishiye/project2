@@ -1,7 +1,12 @@
 import requests
 from lxml import etree
+from fake_useragent import UserAgent
 
-resp = requests.get('https://www.baidu.com')
-e = etree.HTML(resp)
-msg = e.xpath('//h1')
-print(msg)
+url = 'https://www.baidu.com/'
+header = {
+    'User-Agent':UserAgent().chrome
+}
+resp = requests.get(url,headers=header)
+e = etree.HTML(resp.text)
+msgs = e.xpath('//title/text()')
+print(msgs)
